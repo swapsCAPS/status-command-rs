@@ -9,4 +9,5 @@ fn main() {
         process::exit(1)
     });
 
+    num_to_bars(config);
 }
