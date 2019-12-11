@@ -6,9 +6,9 @@ pub struct Config {
 }
 
 struct Box<'a> {
-    empty: &'a str, // "□",
-    half: &'a str, // "▨",
-    full: &'a str, // "▣",
+    empty: &'a str,
+    half:  &'a str,
+    full:  &'a str,
 }
 
 const BOX: Box<'static> = Box {
@@ -39,29 +39,24 @@ impl Config {
 pub fn num_to_bars (config: Config) -> String {
     let mut bars    = Vec::new();
     let val = config.val as f32;
-	println!("val {}", val);
 
 	let amount = val * (5.0 / 100.0);
-	println!("amount {}", amount);
 
 	let rounded = (amount / 0.5).round() * 0.5;
-	println!("rounded {}", rounded);
 
-	// for _ in 0..amount_of_full_bars {
-		// bars.push(BOX.full);
-	// };
+    for _ in 0..rounded as u8 {
+        bars.push(BOX.full);
+    };
 
-	// for _ in 0..amount_of_half_bars {
-		// bars.push(BOX.half);
-	// };
+    if rounded % 1.0 == 0.5 {
+        bars.push(BOX.half);
+    };
 
     for _ in 0..5 - bars.len() {
         bars.push(BOX.empty);
     }
 
     let string: String = bars.into_iter().collect();
-
-    println!("{}", string);
 
     string
 }
@@ -72,7 +67,9 @@ mod tests {
 
     #[test]
     fn test() {
-        assert_eq!(String, num_to_bars(Config { val: 75 }))
+        for i in 0..=100 {
+            println!("{}: {}", i, num_to_bars(Config { val: i }));
+        }
     }
 
 }
