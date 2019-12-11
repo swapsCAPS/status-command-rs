@@ -1,3 +1,4 @@
+use std::fs;
 use std::{env};
 use colored::*;
 
@@ -36,11 +37,10 @@ impl Config {
     }
 }
 
-pub fn num_to_bars (config: Config) -> String {
+pub fn num_to_bars (val: u8) -> String {
     let mut bars    = Vec::new();
-    let val = config.val as f32;
 
-	let amount = val * (5.0 / 100.0);
+	let amount = val as f32 * (5.0 / 100.0);
 
 	let rounded = (amount / 0.5).round() * 0.5;
 
