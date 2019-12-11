@@ -1,10 +1,4 @@
-use std::fs;
-use std::{env};
-use colored::*;
-
-pub struct Config {
-    pub val: u8,
-}
+// use colored::*; // Ahw I do want this tho : )
 
 struct Box<'a> {
     empty: &'a str,
@@ -17,25 +11,6 @@ const BOX: Box<'static> = Box {
     half:  "▥",
     full:  "▣",
 };
-
-impl Config {
-    pub fn new(args: &[String]) -> Result<Config, String> {
-        if args.len() < 2 {
-            return Err(String::from("Not enough args"));
-        }
-
-        let val = match args[1].parse::<u8>() {
-            Ok(v)  => Ok(v),
-            Err(e) => Err(format!("Could not parse {}: {}", args[1], e))
-        }?;
-
-        if val > 100 {
-            return Err(String::from("Value can not be more than 100"))
-        }
-
-        Ok(Config { val })
-    }
-}
 
 pub fn num_to_bars (val: u8) -> String {
     let mut bars    = Vec::new();
