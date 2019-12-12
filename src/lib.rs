@@ -12,10 +12,10 @@ const BOX: Box<'static> = Box {
     full:  "▣",
 };
 
-pub fn num_to_bars (val: u8) -> String {
+pub fn num_to_bars (val: u8, amount_of_bars: u8) -> String {
     let mut bars    = Vec::new();
 
-	let amount = val as f32 * (5.0 / 100.0);
+	let amount = val as f32 * (amount_of_bars as f32 / 100.0);
 
 	let rounded = (amount / 0.5).round() * 0.5;
 
@@ -27,7 +27,7 @@ pub fn num_to_bars (val: u8) -> String {
         bars.push(BOX.half);
     };
 
-    for _ in 0..5 - bars.len() {
+    for _ in 0..amount_of_bars - bars.len() as u8 {
         bars.push(BOX.empty);
     }
 
@@ -43,7 +43,7 @@ mod tests {
     #[test]
     fn test() {
         for i in 0..=100 {
-            println!("{}: {}", i, num_to_bars(Config { val: i }));
+            println!("{}: {}", i, num_to_bars(i, 10));
         }
     }
 
